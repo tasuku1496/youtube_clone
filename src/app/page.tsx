@@ -1,12 +1,12 @@
 function App() {
   return (
-    <div className="App p-4">
-      <a
-        href="#"
-        className="inline-block px-4 py-2 bg-blue-500 text-white font-semibold rounded shadow hover:bg-blue-600"
-      >
-        ボタン
-      </a>
+    <div>
+      <div className="bg-white p-6 rounded-lg shadow-md max-w-md text-center">
+        <h1 className="text-2xl font-bold mb-2">まずは検索してみましょう</h1>
+        <p className="text-gray-600">
+          おすすめ動画を表示するには、まず動画を視聴しましょう。
+        </p>
+      </div>
     </div>
   );
 }
