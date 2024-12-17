@@ -19,12 +19,14 @@ export const VideoCard = ({
   isLive = false,
   channel,
 }: VideoCardProps) => {
+  const defaultThumbnail = "/images/default-thumbnail.jpg";
+
   return (
     <div className="max-w-xs rounded-lg overflow-hidden shadow-md bg-white">
       {/* サムネイル */}
       <div className="relative">
         <Image
-          src={thumbnail}
+          src={thumbnail || defaultThumbnail}
           alt={title}
           width={400}
           height={225}
