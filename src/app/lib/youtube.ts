@@ -1,4 +1,4 @@
-const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
+const YOUTUBE_API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
 const YOUTUBE_API_URL = "https://www.googleapis.com/youtube/v3/search";
 
 export type VideoData = {
