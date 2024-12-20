@@ -10,7 +10,7 @@ export type VideoData = {
   channelTitle: string;
 };
 
-export const fetchRandomVideo = async (): Promise<VideoData | null> => {
+export const fetchRandomVideo = async (): Promise<VideoData[] | null> => {
   try {
     const response = await fetch(
       `${YOUTUBE_API_URL}?part=snippet&chart=mostPopular&maxResults=10&type=video&key=${YOUTUBE_API_KEY}`
@@ -25,17 +25,17 @@ export const fetchRandomVideo = async (): Promise<VideoData | null> => {
 
     if (videos.length === 0) return null;
 
-    // ランダムに1つの動画を選ぶ
-    const randomVideo = videos[Math.floor(Math.random() * videos.length)];
+    // 最大10個の動画を取得
+    const videoList = videos.map((video: any) => ({
+      id: video.id.videoId,
+      title: video.snippet.title,
+      description: video.snippet.description,
+      thumbnail: video.snippet.thumbnails.high.url,
+      publishTime: video.snippet.publishTime,
+      channelTitle: video.snippet.channelTitle,
+    }));
 
-    return {
-      id: randomVideo.id.videoId,
-      title: randomVideo.snippet.title,
-      description: randomVideo.snippet.description,
-      thumbnail: randomVideo.snippet.thumbnails.high.url,
-      publishTime: randomVideo.snippet.publishTime,
-      channelTitle: randomVideo.snippet.channelTitle,
-    };
+    return videoList;
   } catch (error) {
     console.error("Error fetching YouTube videos:", error);
     return null;
