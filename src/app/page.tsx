@@ -10,7 +10,8 @@ export default function Home() {
   useEffect(() => {
     const getRandomVideo = async () => {
       const fetchedVideo = await fetchRandomVideo();
-      setVideo(fetchedVideo);
+      const videoList = fetchedVideo as VideoData[];
+      setVideo(videoList);
     };
 
     getRandomVideo();

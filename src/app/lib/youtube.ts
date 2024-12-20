@@ -2,12 +2,20 @@ const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 const YOUTUBE_API_URL = "https://www.googleapis.com/youtube/v3/search";
 
 export type VideoData = {
-  id: string;
-  title: string;
-  description: string;
-  thumbnail: string;
-  publishTime: string;
-  channelTitle: string;
+  id: {
+    videoId: string;
+  };
+  snippet: {
+    title: string;
+    description: string;
+    thumbnails: {
+      high: {
+        url: string;
+      };
+    };
+    publishTime: string;
+    channelTitle: string;
+  };
 };
 
 export const fetchRandomVideo = async (): Promise<VideoData[] | null> => {
@@ -25,17 +33,7 @@ export const fetchRandomVideo = async (): Promise<VideoData[] | null> => {
 
     if (videos.length === 0) return null;
 
-    // 最大10個の動画を取得
-    const videoList = videos.map((video: any) => ({
-      id: video.id.videoId,
-      title: video.snippet.title,
-      description: video.snippet.description,
-      thumbnail: video.snippet.thumbnails.high.url,
-      publishTime: video.snippet.publishTime,
-      channelTitle: video.snippet.channelTitle,
-    }));
-
-    return videoList;
+    return videos;
   } catch (error) {
     console.error("Error fetching YouTube videos:", error);
     return null;
