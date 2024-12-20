@@ -1,57 +1,46 @@
 import Image from "next/image";
 
 type VideoCardProps = {
-  thumbnail: string;
-  title: string;
-  description?: string;
-  views: string;
-  uploadedAt: string;
-  isLive?: boolean;
-  channel: string;
+  video: {
+    id: string;
+    title: string;
+    description: string;
+    thumbnail: string;
+    publishTime: string;
+    channelTitle: string;
+  };
 };
 
-export const VideoCard = ({
-  thumbnail,
-  title,
-  description,
-  views,
-  uploadedAt,
-  isLive = false,
-  channel,
-}: VideoCardProps) => {
-  const defaultThumbnail = "/images/default-thumbnail.jpg";
-
+export const VideoCard = ({ video }: VideoCardProps) => {
   return (
-    <div className="max-w-xs rounded-lg overflow-hidden shadow-md bg-white">
-      {/* サムネイル */}
-      <div className="relative">
+    <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white">
+      <a
+        href={`https://www.youtube.com/watch?v=${video.id}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <Image
-          src={thumbnail || defaultThumbnail}
-          alt={title}
+          src={video.thumbnail}
+          alt={video.title}
           width={400}
           height={225}
           className="w-full h-auto"
         />
-        {isLive && (
-          <span className="absolute bottom-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
-            ライブ
-          </span>
-        )}
-      </div>
-
-      {/* 詳細 */}
-      <div className="p-4">
-        <h3 className="text-sm font-bold line-clamp-2">{title}</h3>
-        {description && (
-          <p className="text-xs text-gray-500 line-clamp-2 mb-1">
-            {description}
+        <div className="p-4">
+          <h3 className="text-sm font-bold line-clamp-2">{video.title}</h3>
+          {video.description && (
+            <p className="text-xs text-gray-500 line-clamp-2 mb-1">
+              {video.description}
+            </p>
+          )}
+          <p className="text-xs text-gray-600 line-clamp-1">
+            {video.channelTitle}
           </p>
-        )}
-        <p className="text-xs text-gray-600 line-clamp-1">{channel}</p>
-        <p className="text-xs text-gray-600">
-          {views} ・ {uploadedAt}
-        </p>
-      </div>
+          <p className="text-xs text-gray-600">
+            1000回再生 ・ {video.publishTime}
+          </p>
+        </div>
+      </a>
     </div>
   );
 };

@@ -1,14 +1,30 @@
-function App() {
+"use client";
+
+import { useEffect, useState } from "react";
+import { fetchRandomVideo, VideoData } from "@/app/lib/youtube";
+import { VideoCard } from "@/app/components/VideoCard";
+
+export default function Home() {
+  const [videoList, setVideo] = useState<VideoData[] | null>(null);
+
+  useEffect(() => {
+    const getRandomVideo = async () => {
+      const fetchedVideo = await fetchRandomVideo();
+      setVideo(fetchedVideo);
+    };
+
+    getRandomVideo();
+  }, []);
+
   return (
-    <div>
-      <div className="bg-white p-6 rounded-lg shadow-md max-w-md text-center">
-        <h1 className="text-2xl font-bold mb-2">まずは検索してみましょう</h1>
-        <p className="text-gray-600">
-          おすすめ動画を表示するには、まず動画を視聴しましょう。
+    <main className="grid grid-cols-3 gap-4 p-4 bg-gray-100">
+      {videoList && videoList.length > 0 ? (
+        videoList.map((video, index) => <VideoCard key={index} video={video} />)
+      ) : (
+        <p className="col-span-3 text-center text-gray-600">
+          動画を読み込んでいます...
         </p>
-      </div>
-    </div>
+      )}
+    </main>
   );
 }
-
-export default App;
